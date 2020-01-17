@@ -1,5 +1,0 @@
-/Users/pawelbielecki/Projects/notepad-master/Notepad/bin/Debug/Notepad.exe
-/Users/pawelbielecki/Projects/notepad-master/Notepad/bin/Debug/Notepad.pdb
-/Users/pawelbielecki/Projects/notepad-master/Notepad/obj/anycpu/Debug/Notepad.csprojAssemblyReference.cache
-/Users/pawelbielecki/Projects/notepad-master/Notepad/obj/anycpu/Debug/Notepad.exe
-/Users/pawelbielecki/Projects/notepad-master/Notepad/obj/anycpu/Debug/Notepad.pdb
