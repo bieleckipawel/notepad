@@ -192,4 +192,31 @@ public partial class MainWindow : Gtk.Window
     {
         textview1.Buffer.SelectRange(textview1.Buffer.StartIter, textview1.Buffer.EndIter);
     }
+
+    protected void OnFontAction1Activated(object sender, EventArgs e)
+    {
+        FontSelectionDialog font = new FontSelectionDialog("Select font name");
+        font.Response += delegate (object o, ResponseArgs resp) {
+
+            if (resp.ResponseId == ResponseType.Ok)
+            {
+                Pango.FontDescription fontsel =
+                    Pango.FontDescription.FromString(font.FontName);
+                textview1.ModifyFont(fontsel);
+            }
+        };
+
+        font.Run();
+        font.Destroy();
+    }
+
+    protected void OnAboutActionActivated(object sender, EventArgs e)
+    {
+        AboutDialog about = new AboutDialog();
+        about.ProgramName = "Notepad";
+        about.Copyright = "(c) Paweł Bielecki";
+        about.Website = "http://bieleckipawel.pl";
+        about.Run();
+        about.Destroy();
+    }
 }
