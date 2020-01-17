@@ -1,0 +1,17 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Notepad", "Notepad\Notepad.csproj", "{91050F14-0D06-44EC-8C30-5A84626BA649}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|anycpu = Debug|anycpu
+		Release|anycpu = Release|anycpu
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{91050F14-0D06-44EC-8C30-5A84626BA649}.Debug|anycpu.ActiveCfg = Debug|anycpu
+		{91050F14-0D06-44EC-8C30-5A84626BA649}.Debug|anycpu.Build.0 = Debug|anycpu
+		{91050F14-0D06-44EC-8C30-5A84626BA649}.Release|anycpu.ActiveCfg = Release|anycpu
+		{91050F14-0D06-44EC-8C30-5A84626BA649}.Release|anycpu.Build.0 = Release|anycpu
+	EndGlobalSection
+EndGlobal
