@@ -7,16 +7,6 @@
     <widget-library name="glade-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <widget-library name="../bin/Debug/Notepad.exe" internal="true" />
   </import>
-<<<<<<< HEAD
-=======
-  <icon-factory>
-    <icon-set id="icon">
-      <source>
-        <property name="Image">resource:Notepad.icon.ico</property>
-      </source>
-    </icon-set>
-  </icon-factory>
->>>>>>> 19a519c... Wszystkie funkcje działają
   <widget class="Gtk.Window" id="MainWindow" design-size="463 300">
     <action-group name="Default">
       <action id="FileAction">
@@ -80,10 +70,7 @@
         <property name="Type">Action</property>
         <property name="Label" translatable="yes">Font</property>
         <property name="ShortLabel" translatable="yes">Font</property>
-<<<<<<< HEAD
-=======
         <signal name="Activated" handler="OnFontAction1Activated" />
->>>>>>> 19a519c... Wszystkie funkcje działają
       </action>
       <action id="HelpAction">
         <property name="Type">Action</property>
@@ -94,10 +81,7 @@
         <property name="Type">Action</property>
         <property name="Label" translatable="yes">About</property>
         <property name="ShortLabel" translatable="yes">About</property>
-<<<<<<< HEAD
-=======
         <signal name="Activated" handler="OnAboutActionActivated" />
->>>>>>> 19a519c... Wszystkie funkcje działają
       </action>
       <action id="ExitAction">
         <property name="Type">Action</property>
@@ -107,16 +91,11 @@
       </action>
     </action-group>
     <property name="MemberName" />
-<<<<<<< HEAD
-    <property name="Title" translatable="yes">MainWindow</property>
-    <property name="WindowPosition">CenterOnParent</property>
-=======
     <property name="Title" translatable="yes">Notepad</property>
-    <property name="Icon">resource:Notepad.icon.ico</property>
+    <property name="Icon">resource:Notepad.icon.png</property>
     <property name="WindowPosition">CenterOnParent</property>
     <property name="DefaultWidth">640</property>
     <property name="DefaultHeight">480</property>
->>>>>>> 19a519c... Wszystkie funkcje działają
     <signal name="DeleteEvent" handler="OnDeleteEvent" />
     <child>
       <widget class="Gtk.VBox" id="vbox1">
@@ -125,7 +104,7 @@
         <child>
           <widget class="Gtk.MenuBar" id="menubar1">
             <property name="MemberName" />
-            <node name="__gtksharp_77_Stetic_Editor_ActionMenuBar" type="Menubar">
+            <node name="menubar1" type="Menubar">
               <node type="Menu" action="FileAction">
                 <node type="Menuitem" action="SaveAction" />
                 <node type="Menuitem" action="NewAction" />

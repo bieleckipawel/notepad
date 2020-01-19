@@ -11,13 +11,6 @@ namespace Stetic
 			if ((Stetic.Gui.initialized == false))
 			{
 				Stetic.Gui.initialized = true;
-<<<<<<< HEAD
-=======
-				global::Gtk.IconFactory w1 = new global::Gtk.IconFactory();
-				global::Gtk.IconSet w2 = new global::Gtk.IconSet(global::Gdk.Pixbuf.LoadFromResource("Notepad.icon.ico"));
-				w1.Add("icon", w2);
-				w1.AddDefault();
->>>>>>> 19a519c... Wszystkie funkcje działają
 			}
 		}
 	}

@@ -4,67 +4,69 @@ using Gtk;
 
 public partial class MainWindow : Gtk.Window
 {
+    public string openfile;
+
     public MainWindow() : base(Gtk.WindowType.Toplevel)
     {
         Build();
     }
-
-    protected void OnDeleteEvent(object sender, DeleteEventArgs a)
+    private ResponseType Savequestion()
     {
-        if (textview1.Buffer.Modified == true)
-        {
-            MessageDialog md1 = new MessageDialog(null, DialogFlags.Modal, MessageType.Info, ButtonsType.YesNo, "Do you want to save changes?");
-            ResponseType wynik = (ResponseType)md1.Run();
-            md1.Destroy();
-            if (wynik == ResponseType.No)
-            {
-                Gtk.Application.Quit();
-                a.RetVal = true;
-            }
-            else if (wynik == ResponseType.Yes)
-            {
-                Gtk.FileChooserDialog fileChooser =
-                       new Gtk.FileChooserDialog("Select file", this, FileChooserAction.Save, "Cancel", ResponseType.Cancel, "Save", ResponseType.Accept); if (fileChooser.Run() == (int)ResponseType.Accept)
-                {
-                    string save = textview1.Buffer.GetText(textview1.Buffer.StartIter, textview1.Buffer.EndIter, true);
-                    File.WriteAllText(fileChooser.Filename, save);
-                    fileChooser.Destroy();
-                    Gtk.Application.Quit();
-                    a.RetVal = true;
-                }
-            }
-        }
+        MessageDialog md1 = new MessageDialog(null, DialogFlags.Modal, MessageType.Info, ButtonsType.YesNo, "Do you want to save changes?");
+        ResponseType w = (ResponseType)md1.Run();
+        md1.Destroy();
+        return w;
     }
-
-    protected void OnExitActionActivated(object sender, EventArgs e)
+    private void Save()
     {
-        if (textview1.Buffer.Modified == true)
+        if (string.IsNullOrEmpty(openfile))
         {
-            MessageDialog md1 = new MessageDialog(null, DialogFlags.Modal, MessageType.Info, ButtonsType.YesNo, "Do you want to save changes?");
-            ResponseType wynik = (ResponseType)md1.Run();
-            md1.Destroy();
-            if (wynik == ResponseType.No)
+            Gtk.FileChooserDialog fileChooser =
+                   new Gtk.FileChooserDialog("Select file", this, FileChooserAction.Save, "Cancel", ResponseType.Cancel, "Save", ResponseType.Accept); if (fileChooser.Run() == (int)ResponseType.Accept)
             {
-                Gtk.Application.Quit();
-            }
-            else if (wynik == ResponseType.Yes)
-            {
-                Gtk.FileChooserDialog fileChooser =
-                        new Gtk.FileChooserDialog("Select file", this, FileChooserAction.Save, "Cancel", ResponseType.Cancel, "Save", ResponseType.Accept);
-                if (fileChooser.Run() == (int)ResponseType.Accept)
-                {
-                    string save = textview1.Buffer.GetText(textview1.Buffer.StartIter, textview1.Buffer.EndIter, true);
-                    File.WriteAllText(fileChooser.Filename, save);
-                    fileChooser.Destroy();
-                    Gtk.Application.Quit();
-                }
+                string save = textview1.Buffer.GetText(textview1.Buffer.StartIter, textview1.Buffer.EndIter, true);
+                openfile = fileChooser.Filename;
+                File.WriteAllText(fileChooser.Filename, save);
+                fileChooser.Destroy();
             }
         }
         else
         {
-            Gtk.Application.Quit();
+            string save = textview1.Buffer.GetText(textview1.Buffer.StartIter, textview1.Buffer.EndIter, true);
+            File.WriteAllText(openfile, save);
         }
+    }
+    private void Open()
+    {
+        Gtk.FileChooserDialog fileChooser =
+                       new Gtk.FileChooserDialog("Select file", this, FileChooserAction.Open, "Cancel", ResponseType.Cancel, "Open", ResponseType.Accept);
+        if (fileChooser.Run() == (int)ResponseType.Accept)
+        {
+            string content = File.ReadAllText(fileChooser.Filename);
+            openfile = fileChooser.Filename;
+            textview1.Buffer.Text = content;
+            textview1.Buffer.Modified = false;
+            fileChooser.Destroy();
+        }
+    }
+    protected void OnDeleteEvent(object sender, DeleteEventArgs a)
+    {
+        if (textview1.Buffer.Modified == true)
+        {
+            ResponseType wynik = Savequestion();
+            if (wynik == ResponseType.Yes)
+            {
+                Save();
+            }
+        }
+            Gtk.Application.Quit();
+            a.RetVal = true;
+    }
 
+    protected void OnExitActionActivated(object sender, EventArgs e)
+    {
+        DeleteEventArgs a=null;
+        OnDeleteEvent(sender, a);
 
     }
 
@@ -72,102 +74,32 @@ public partial class MainWindow : Gtk.Window
     {
         if (textview1.Buffer.Modified == true)
         {
-            MessageDialog md1 = new MessageDialog(null, DialogFlags.Modal, MessageType.Info, ButtonsType.YesNo, "Do you want to save changes?");
-            ResponseType wynik = (ResponseType)md1.Run();
-            md1.Destroy();
-            if (wynik == ResponseType.No)
-            {
-                textview1.Buffer.Clear();
-            }
-            else if (wynik == ResponseType.Yes)
-            {
-                Gtk.FileChooserDialog fileChooser =
-                       new Gtk.FileChooserDialog("Select file", this, FileChooserAction.Save, "Cancel", ResponseType.Cancel, "Save", ResponseType.Accept);
-                if (fileChooser.Run() == (int)ResponseType.Accept)
-                {
-                    string save = textview1.Buffer.GetText(textview1.Buffer.StartIter, textview1.Buffer.EndIter, true);
-                    File.WriteAllText(fileChooser.Filename, save);
-                    fileChooser.Destroy();
-                    textview1.Buffer.Clear();
-                    textview1.Buffer.Modified = false;
-                }
-            }
-
-            else
-            {
-                textview1.Buffer.Clear();
-                textview1.Buffer.Modified = false;
-            }
-
+            ResponseType wynik = Savequestion();
+            if (wynik == ResponseType.Yes)
+            Save();
         }
+        textview1.Buffer.Clear();
+        openfile = null;
+        textview1.Buffer.Modified = false;
     }
 
     protected void OnOpenActionActivated(object sender, EventArgs e)
     {
         if (textview1.Buffer.Modified == true)
         {
-            MessageDialog md1 = new MessageDialog(null, DialogFlags.Modal, MessageType.Info, ButtonsType.YesNo, "Do you want to save changes?");
-            ResponseType wynik = (ResponseType)md1.Run();
-            md1.Destroy();
-            if (wynik == ResponseType.No)
+            ResponseType wynik = Savequestion();
+            if (wynik == ResponseType.Yes)
             {
-                Gtk.FileChooserDialog fileChooser =
-                       new Gtk.FileChooserDialog("Select file", this, FileChooserAction.Open, "Cancel", ResponseType.Cancel, "Open", ResponseType.Accept);
-                if (fileChooser.Run() == (int)ResponseType.Accept)
-                {
-                    string content = File.ReadAllText(fileChooser.Filename);
-                    textview1.Buffer.Text = content;
-                    textview1.Buffer.Modified = false;
-                    fileChooser.Destroy();
-                }
-            }
-            else if (wynik == ResponseType.Yes)
-            {
-                Gtk.FileChooserDialog fileChooser =
-                       new Gtk.FileChooserDialog("Select file", this, FileChooserAction.Save, "Cancel", ResponseType.Cancel, "Save", ResponseType.Accept);
-                if (fileChooser.Run() == (int)ResponseType.Accept)
-                {
-                    string save = textview1.Buffer.GetText(textview1.Buffer.StartIter, textview1.Buffer.EndIter, true);
-                    File.WriteAllText(fileChooser.Filename, save);
-                    fileChooser.Destroy();
-                    textview1.Buffer.Clear();
-                    Gtk.FileChooserDialog fileChooser1 =
-                       new Gtk.FileChooserDialog("Select file", this, FileChooserAction.Open, "Cancel", ResponseType.Cancel, "Open", ResponseType.Accept);
-                    if (fileChooser1.Run() == (int)ResponseType.Accept)
-                    {
-                        string content = File.ReadAllText(fileChooser1.Filename);
-                        textview1.Buffer.Text = content;
-                        textview1.Buffer.Modified = false;
-                        fileChooser1.Destroy();
-                    }
-                }
+                Save();
             }
         }
-        else
-        {
-            Gtk.FileChooserDialog fileChooser1 =
-                                   new Gtk.FileChooserDialog("Select file", this, FileChooserAction.Open, "Cancel", ResponseType.Cancel, "Open", ResponseType.Accept);
-            if (fileChooser1.Run() == (int)ResponseType.Accept)
-            {
-                string content = File.ReadAllText(fileChooser1.Filename);
-                textview1.Buffer.Text = content;
-                textview1.Buffer.Modified = false;
-                fileChooser1.Destroy();
-            }
-        }
+        Open();
     }
 
     protected void OnSaveActionActivated(object sender, EventArgs e)
     {
-        FileChooserDialog fileChooser =
-                       new Gtk.FileChooserDialog("Select file", this, FileChooserAction.Save, "Cancel", ResponseType.Cancel, "Save", ResponseType.Accept);
-        if (fileChooser.Run() == (int)ResponseType.Accept)
-        {
-            string save = textview1.Buffer.GetText(textview1.Buffer.StartIter, textview1.Buffer.EndIter, true);
-            File.WriteAllText(fileChooser.Filename, save);
-            fileChooser.Destroy();
-            textview1.Buffer.Modified = false;
-        }
+        Save();
+        textview1.Buffer.Modified = false;
     }
 
     protected void OnCopyActionActivated(object sender, EventArgs e)

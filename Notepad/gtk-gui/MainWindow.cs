@@ -92,16 +92,11 @@ public partial class MainWindow
 		this.UIManager.InsertActionGroup(w1, 0);
 		this.AddAccelGroup(this.UIManager.AccelGroup);
 		this.Name = "MainWindow";
-<<<<<<< HEAD
-		this.Title = global::Mono.Unix.Catalog.GetString("MainWindow");
-		this.WindowPosition = ((global::Gtk.WindowPosition)(4));
-=======
 		this.Title = global::Mono.Unix.Catalog.GetString("Notepad");
-		this.Icon = global::Gdk.Pixbuf.LoadFromResource("Notepad.icon.ico");
+		this.Icon = global::Gdk.Pixbuf.LoadFromResource("Notepad.icon.png");
 		this.WindowPosition = ((global::Gtk.WindowPosition)(4));
 		this.DefaultWidth = 640;
 		this.DefaultHeight = 480;
->>>>>>> 19a519c... Wszystkie funkcje działają
 		// Container child MainWindow.Gtk.Container+ContainerChild
 		this.vbox1 = new global::Gtk.VBox();
 		this.vbox1.Name = "vbox1";
@@ -132,11 +127,6 @@ public partial class MainWindow
 		{
 			this.Child.ShowAll();
 		}
-<<<<<<< HEAD
-		this.DefaultWidth = 463;
-		this.DefaultHeight = 300;
-=======
->>>>>>> 19a519c... Wszystkie funkcje działają
 		this.Show();
 		this.DeleteEvent += new global::Gtk.DeleteEventHandler(this.OnDeleteEvent);
 		this.NewAction.Activated += new global::System.EventHandler(this.OnNewActionActivated);
@@ -146,11 +136,8 @@ public partial class MainWindow
 		this.CopyAction.Activated += new global::System.EventHandler(this.OnCopyActionActivated);
 		this.PasteAction.Activated += new global::System.EventHandler(this.OnPasteActionActivated);
 		this.CutAction.Activated += new global::System.EventHandler(this.OnCutActionActivated);
-<<<<<<< HEAD
-=======
 		this.FontAction1.Activated += new global::System.EventHandler(this.OnFontAction1Activated);
 		this.AboutAction.Activated += new global::System.EventHandler(this.OnAboutActionActivated);
->>>>>>> 19a519c... Wszystkie funkcje działają
 		this.ExitAction.Activated += new global::System.EventHandler(this.OnExitActionActivated);
 	}
 }
